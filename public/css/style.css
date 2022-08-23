@@ -1,0 +1,12 @@
+form > *{
+    display: block;
+    margin-top: 10px;
+}
+
+li {
+    list-style: none;
+}
+
+.checkboxes {
+    display: block;
+}
