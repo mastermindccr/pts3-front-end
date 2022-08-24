@@ -4,10 +4,9 @@ export default function Backstage() {
     const [imageFile, setImageFile] = useState(null);
 
     async function handleSubmit() {
-        const response = await fetch('https://5000-1d93dc6a-02b4-4f81-8035-4ffd3bf1ddee.cs-asia-east1-jnrc.cloudshell.dev/submit', {
+        const response = await fetch('https://5000-cs-901156777793-default.cs-asia-east1-jnrc.cloudshell.dev/submit', {
             method: 'POST',
-            credentials: 'include',
-            body: "Hello"
+            body: imageFile
         });
         console.log(await response.json());
         return;

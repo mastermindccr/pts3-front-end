@@ -9,13 +9,12 @@ const upload = multer({
     dest: './public/img'
 })
 
-app.use(cors({origin: '*', credentials: true}))
+app.use(cors({origin: '9000-cs-901156777793-default.cs-asia-east1-jnrc.cloudshell.dev'}))
 app.use(express.static("public"));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/submit',/*  bodyParser.raw({type: ['image/jpeg', 'image/png']}),  */  (req, res) => {
-    res.setHeader('Access-Allow-Origin': true)
+app.post('/submit',bodyParser.raw({type: ['image/jpeg', 'image/png']}),  (req, res) => {
     console.log(req.body);
     res.end(JSON.stringify("Home"))
 })
