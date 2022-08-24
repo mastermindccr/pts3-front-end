@@ -1,0 +1,32 @@
+.submitPic {
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.submitPic input {
+    font-size: 20px;
+    margin: 2em;
+}
+
+.border {
+    text-align: center;
+    display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.choosePic {
+    margin-left: 30%;
+    font-size: 25px;
+}
+
+.choosePic input {
+    margin-right: 10px;
+    margin-bottom: 30px;
+    width: 20px;
+    height: 20px;
+}

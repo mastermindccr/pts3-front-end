@@ -1,7 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import '../css/backstage.css'
 
 export default function Backstage() {
     const [imageFile, setImageFile] = useState(null);
+    const [imageShow, setImageShow] = useState([]);
+
+    useEffect(() => {
+        (async()=>{
+            const response = await (await fetch('http://localhost:5000/getImagesURL')).json();
+            setImageShow(response);
+        })();
+    }, [imageShow])
 
     async function handleSubmit() {
         if(!imageFile){
@@ -11,15 +20,15 @@ export default function Backstage() {
         if(await handleRepeated()) return;
         const formData = new FormData();
         formData.append('img', imageFile);
-        const response = await (await fetch('http://localhost:5000/submit', {
+        await fetch('http://localhost:5000/submit', {
             method: 'POST',
             body: formData
-        })).json();
-        if(response) console.log(response);
-        return;
+        });
+        document.getElementById('uploadImage').value = '';
+        setImageFile(null);
     }
 
-    async function handleRepeated () {
+    async function handleRepeated() {
         const response = await (await fetch('http://localhost:5000/checkImageExists', {
             method: 'POST',
             headers: {
@@ -38,15 +47,34 @@ export default function Backstage() {
         return false;
     }
 
+    function renderPicChoice() {
+        if(imageShow){
+            return imageShow.map(file => {
+                return <div>
+                    <input type='checkbox'/>
+                    <label>{file}</label>
+                </div>
+            })
+        }
+    }
+
     return <div>
-        <h1>Submit A File</h1>
-        <input type="file" onChange={event=>setImageFile(event.target.files[0])}/>
-        {imageFile?
-        <div>
-            <p>filename: {imageFile.name}</p>
-            <p>filetype: {imageFile.type}</p>
-            <p>filesize: {imageFile.size} bytes</p>
-        </div>:<div/>}
-        <input type='submit' onClick={async()=>await handleSubmit()}/>
+        <div className="submitPic">
+            <h1>Submit A File</h1>
+            <div className='border'>
+                <input type="file" id="uploadImage" onChange={event=>setImageFile(event.target.files[0])}/>
+                {imageFile?
+                <div>
+                    <p>filename: {imageFile.name}</p>
+                    <p>filetype: {imageFile.type}</p>
+                    <p>filesize: {imageFile.size} bytes</p>
+                </div>:<div/>}
+                <input type='submit' onClick={async()=>await handleSubmit()}/>
+            </div>
+        </div>
+        <div className="choosePic">
+            {imageShow.length?<p>render which pictures?</p>:<div/>}
+            {renderPicChoice()}
+        </div>
     </div>
 }

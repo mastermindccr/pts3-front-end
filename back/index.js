@@ -1,10 +1,9 @@
 const express = require('express')
 const app = express();
-const bodyParser = require('body-parser');
-const path = require('path');
 const fs = require('fs');
 const cors = require('cors')
-const multer = require('multer')
+const multer = require('multer');
+const path = require('path');
 const upload = multer({
     dest: './public/img'
 })
@@ -22,15 +21,40 @@ app.post('/submit', upload.single('img'), (req, res) => {
             if(err) console.error(err);
         })
     }
-    res.end(JSON.stringify(''));
+    res.json('');
 })
 
 app.post('/checkImageExists', (req, res) => {
     if(fs.existsSync(`./public/img/${req.body.name}`)){
-        res.end(JSON.stringify('repeated'));
+        res.json('repeated');
         return;
     }   
-    res.end(JSON.stringify('ok'));
+    res.json('');
+})
+
+app.get('/getImagesURL', (req, res) => {
+    const Urls = fs.readdirSync('./public/img', (err, data) => {
+        if(err) console.error(err);
+        return data;
+    })
+    if(Urls) res.json(Urls);
+    else res.json('');
+})
+
+app.get('/getImages', (req, res) => {
+    var files = [];
+    fs.readdir('./public/img', (err, data) => {
+        if(err) console.error(err);
+        files = data.map(file => {
+            fs.readFile(`./public/img/${file}`, (err, data) => {
+                if(err) console.log(err);
+                return data;
+            })
+        })
+    })
+    console.log(files);
+    res.data = files;
+    res.json(res);
 })
 
 app.listen('5000', ()=>{

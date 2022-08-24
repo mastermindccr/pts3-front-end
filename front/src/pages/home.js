@@ -1,5 +1,11 @@
 import React from 'react';
 
 export default function Home() {
-    return <p>Home</p>
+    async function handleImgs() {
+        await fetch('http://localhost:5000/getImages');
+    }
+
+    return <ul>
+        {handleImgs()}
+    </ul>
 }
