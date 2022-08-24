@@ -9,37 +9,28 @@ const upload = multer({
     dest: './public/img'
 })
 
-app.use(cors({origin: '9000-cs-901156777793-default.cs-asia-east1-jnrc.cloudshell.dev'}))
+app.use(cors({origin: 'http://localhost:9000'}))
 app.use(express.static("public"));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/submit',bodyParser.raw({type: ['image/jpeg', 'image/png']}),  (req, res) => {
-    console.log(req.body);
-    res.end(JSON.stringify("Home"))
-})
-
-app.get('/backstage', (req, res) => {
-    var imgs = fs.readFileSync(path.join(__dirname, './public/records/path.txt')).toString().split("\n").filter(val => val!=='');
-    res.render('backstage', {
-        imgs
-    });
-})
-
-app.post('/form', upload.single('file'), async (req, res) => {
-    const select = req.body.options?(typeof(req.body.options)==typeof([])?req.body.options:[req.body.options]):[];
-    await fs.writeFileSync(path.join(__dirname, './public/records/select.txt'), JSON.stringify(select), (e)=>{console.log(e)});
+app.post('/submit', upload.single('img'), (req, res) => {
     if(req.file){
         const tempPath = req.file.path;
-        const targetPath = path.join(__dirname, `./public/img/${req.body.name}.png`);
-        await fs.appendFileSync(path.join(__dirname, './public/records/path.txt'), `${req.body.name}\n`, ()=>{})
+        const targetPath = path.join(__dirname, `./public/img/${req.file.originalname}`);
         fs.rename(tempPath, targetPath, err => {
             if(err) console.error(err);
         })
     }
-    
-    
-    res.redirect('/backstage');
+    res.end(JSON.stringify(''));
+})
+
+app.post('/checkImageExists', (req, res) => {
+    if(fs.existsSync(`./public/img/${req.body.name}`)){
+        res.end(JSON.stringify('repeated'));
+        return;
+    }   
+    res.end(JSON.stringify('ok'));
 })
 
 app.listen('5000', ()=>{
