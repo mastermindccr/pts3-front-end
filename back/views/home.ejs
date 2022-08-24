@@ -1,0 +1,6 @@
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+<ul>
+    <% for(let i in imgs){ %>
+        <li><img src= <%= `/img/${imgs[i]}.png` %> alt=path/></li>
+    <% } %>
+</ul>
