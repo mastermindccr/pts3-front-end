@@ -20,6 +20,11 @@ app.post('/submit', upload.single('img'), (req, res) => {
         fs.rename(tempPath, targetPath, err => {
             if(err) console.error(err);
         })
+        const file = require('./public/showPic.json')
+        file[req.file.originalname] = false;
+        fs.writeFile(path.join(__dirname, './public/showPic.json'), JSON.stringify(file), (err) => {
+            if(err) console.error(err);
+        })
     }
     res.json('');
 })
@@ -32,12 +37,21 @@ app.post('/checkImageExists', (req, res) => {
     res.json('');
 })
 
+app.post('./render', (req, res) => {
+    
+})
+
 app.get('/getImagesURL', (req, res) => {
     const Urls = fs.readdirSync('./public/img', (err, data) => {
         if(err) console.error(err);
         return data;
     })
-    if(Urls) res.json(Urls);
+    console.log(Urls)
+    var ret = [];
+    for(let i in Urls){
+        ret.push({name: Urls[i], show: false});
+    }
+    if(ret) res.json(ret);
     else res.json('');
 })
 

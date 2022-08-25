@@ -4,13 +4,16 @@ import '../css/backstage.css'
 export default function Backstage() {
     const [imageFile, setImageFile] = useState(null);
     const [imageShow, setImageShow] = useState([]);
-
     useEffect(() => {
-        (async()=>{
-            const response = await (await fetch('http://localhost:5000/getImagesURL')).json();
+        (async () => {
+            const response = await (await fetch('http://localhost:5000/getImagesURL')).json()
             setImageShow(response);
         })();
-    }, [imageShow])
+    }, [])
+
+    async function handleImgShow() {
+        setImageShow(await (await fetch('http://localhost:5000/getImagesURL')).json());
+    }
 
     async function handleSubmit() {
         if(!imageFile){
@@ -26,6 +29,7 @@ export default function Backstage() {
         });
         document.getElementById('uploadImage').value = '';
         setImageFile(null);
+        await handleImgShow();
     }
 
     async function handleRepeated() {
@@ -47,15 +51,33 @@ export default function Backstage() {
         return false;
     }
 
+    async function handleClickRender() {
+        // const response = await fetch('http://localhost:5000/render', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+
+        //     })
+        // })
+    }
+
     function renderPicChoice() {
-        if(imageShow){
-            return imageShow.map(file => {
-                return <div>
-                    <input type='checkbox'/>
-                    <label>{file}</label>
-                </div>
-            })
-        }
+        return <div>
+            {imageShow.map(file => {
+            return <div key={file.name}>
+                <input type='checkbox' filename={file.name} checked={file.show} onChange={(e)=>{
+                    const next = imageShow.map(obj => {
+                        if(e.target.getAttribute('filename')===obj.name)
+                            return {...obj, show: !obj.show};
+                        return obj;
+                    })
+                    console.log(next);
+                    setImageShow(next);
+                }}/>
+                <label>{file.name}</label>
+            </div>
+        })}
+        {imageShow?<input type='submit' value="render" onClick={()=>handleClickRender()}/>:<div/>}
+        </div>
     }
 
     return <div>
@@ -69,7 +91,7 @@ export default function Backstage() {
                     <p>filetype: {imageFile.type}</p>
                     <p>filesize: {imageFile.size} bytes</p>
                 </div>:<div/>}
-                <input type='submit' onClick={async()=>await handleSubmit()}/>
+                <input type='submit' onClick={()=>handleSubmit()}/>
             </div>
         </div>
         <div className="choosePic">
