@@ -48,6 +48,22 @@ app.post('/render', (req, res) => {
     res.json('good');
 })
 
+app.post('/delete', (req, res) => {
+    const file = require('./public/showPic.json');
+    for(let i in req.body){
+        if(req.body[i].show){
+            fs.unlink(path.join(__dirname, `./public/img/${req.body[i].name}`), (err)=>{
+                if(err) console.error(err);
+            });
+            delete file[req.body[i].name];
+        }   
+    }
+    fs.writeFile(path.join(__dirname, './public/showPic.json'), JSON.stringify(file), (err) => {
+        if(err) console.error(err);
+    })
+    res.json('good');
+})
+
 app.get('/getImagesURL', (req, res) => {
     const file = require('./public/showPic.json');
     var ret = [];
@@ -58,20 +74,20 @@ app.get('/getImagesURL', (req, res) => {
     else res.json('');
 })
 
-app.get('/getImages', (req, res) => {
-    var files = [];
-    fs.readdir('./public/img', (err, data) => {
-        if(err) console.error(err);
-        files = data.map(file => {
-            fs.readFile(`./public/img/${file}`, (err, data) => {
-                if(err) console.log(err);
-                return data;
-            })
-        })
-    })
-    console.log(files);
-    res.data = files;
-    res.json(res);
+app.get('/getUsedBanners', (req, res) => {
+    const file = require('./public/showPic.json');
+    var ret = [];
+    for(let i in file){
+        if(file[i]){
+            ret.push(i);
+        }
+    }
+    if(ret) res.json(ret);
+    else res.json('');
+})
+
+app.get('/:image', (req, res) => {
+    res.sendFile(path.join(__dirname, `./public/img/${req.params.image}`))
 })
 
 app.listen('5000', ()=>{

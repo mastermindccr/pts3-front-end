@@ -4,16 +4,17 @@ import '../css/backstage.css'
 export default function Backstage() {
     const [imageFile, setImageFile] = useState(null);
     const [imageShow, setImageShow] = useState([]);
+    const [imageDelete, setImageDelete] = useState([]);
     useEffect(() => {
         (async () => {
             const response = await (await fetch('http://localhost:5000/getImagesURL')).json()
             setImageShow(response);
+            const del = response.map(file => {
+                return {...file, show: false};
+            })
+            setImageDelete(del);
         })();
     }, [])
-
-    async function handleImgShow() {
-        setImageShow(await (await fetch('http://localhost:5000/getImagesURL')).json());
-    }
 
     async function handleSubmit() {
         if(!imageFile){
@@ -29,7 +30,12 @@ export default function Backstage() {
         });
         document.getElementById('uploadImage').value = '';
         setImageFile(null);
-        await handleImgShow();
+        const response = await (await fetch('http://localhost:5000/getImagesURL')).json();
+        setImageShow(response);
+        const del = response.map(file => {
+            return {...file, show: false};
+        })
+        setImageDelete(del);
     }
 
     async function handleRepeated() {
@@ -61,8 +67,28 @@ export default function Backstage() {
             body: JSON.stringify(imageShow)
         })).json();
         if(response){
-            alert('render completed!');
+            alert('render complete!');
         }
+    }
+
+    async function handleClickDelete() {
+        const response = await (await fetch('http://localhost:5000/delete', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(imageDelete)
+        })).json();
+        if(response){
+            alert('delete complete!');
+        }
+        const response2 = await (await fetch('http://localhost:5000/getImagesURL')).json();
+        setImageShow(response2);
+        const del = response2.map(file => {
+            return {...file, show: false};
+        })
+        setImageDelete(del);
     }
 
     function renderPicChoice() {
@@ -84,9 +110,28 @@ export default function Backstage() {
         </div>
     }
 
+    function deletePicChoice() {
+        return <div>
+            {imageDelete.map(file => {
+            return <div key={file.name}>
+                <input type='checkbox' filename={file.name} onChange={(e)=>{
+                    const next = imageDelete.map(obj => {
+                        if(e.target.getAttribute('filename')===obj.name)
+                            return {...obj, show: !obj.show};
+                        return obj;
+                    })
+                    setImageDelete(next);
+                }}/>
+                <label>{file.name}</label>
+            </div>
+        })}
+        {imageDelete?<input type='submit' value="delete" onClick={()=>handleClickDelete()}/>:<div/>}
+        </div>
+    }
+
     return <div>
         <div className="submitPic">
-            <h1>Submit A File</h1>
+            <h1>Submit Pictures</h1>
             <div className='border'>
                 <input type="file" id="uploadImage" onChange={event=>setImageFile(event.target.files[0])}/>
                 {imageFile?
@@ -101,6 +146,10 @@ export default function Backstage() {
         <div className="choosePic">
             {imageShow.length?<p>render which pictures?</p>:<div/>}
             {renderPicChoice()}
+        </div>
+        <div className="choosePic">
+            {imageDelete.length?<p>delete which pictures?</p>:<div/>}
+            {deletePicChoice()}
         </div>
     </div>
 }
