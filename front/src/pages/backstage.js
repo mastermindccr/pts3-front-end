@@ -52,12 +52,17 @@ export default function Backstage() {
     }
 
     async function handleClickRender() {
-        // const response = await fetch('http://localhost:5000/render', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-
-        //     })
-        // })
+        const response = await (await fetch('http://localhost:5000/render', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(imageShow)
+        })).json();
+        if(response){
+            alert('render completed!');
+        }
     }
 
     function renderPicChoice() {
@@ -70,7 +75,6 @@ export default function Backstage() {
                             return {...obj, show: !obj.show};
                         return obj;
                     })
-                    console.log(next);
                     setImageShow(next);
                 }}/>
                 <label>{file.name}</label>

@@ -37,19 +37,22 @@ app.post('/checkImageExists', (req, res) => {
     res.json('');
 })
 
-app.post('./render', (req, res) => {
-    
+app.post('/render', (req, res) => {
+    const file = require('./public/showPic.json');
+    for(let i in req.body){
+        file[req.body[i].name] = req.body[i].show;
+    }
+    fs.writeFile(path.join(__dirname, './public/showPic.json'), JSON.stringify(file), (err) => {
+        if(err) console.error(err);
+    })
+    res.json('good');
 })
 
 app.get('/getImagesURL', (req, res) => {
-    const Urls = fs.readdirSync('./public/img', (err, data) => {
-        if(err) console.error(err);
-        return data;
-    })
-    console.log(Urls)
+    const file = require('./public/showPic.json');
     var ret = [];
-    for(let i in Urls){
-        ret.push({name: Urls[i], show: false});
+    for(let i in file){
+        ret.push({name: i, show: file[i]});
     }
     if(ret) res.json(ret);
     else res.json('');
