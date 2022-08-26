@@ -1,0 +1,14 @@
+.fbPages {
+    display: flex;
+    margin-left: 100px;
+    margin-right: 100px;
+    align-items: center;
+}
+
+.fbPages div {
+    margin: 0 auto;
+    display: flex;
+    overflow: scroll;
+    height: 500px;
+    width: 500px;
+}

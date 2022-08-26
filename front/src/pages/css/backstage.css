@@ -6,7 +6,7 @@
 
 .submitPic input {
     font-size: 20px;
-    margin: 1em 20%;
+    margin: 1em auto;
 }
 
 .border {
@@ -19,9 +19,25 @@
     margin-right: 30%;
 }
 
+.renderAndDelete {
+    display:flex;
+    margin: 0 15%;
+}
+
 .choosePic {
-    margin-left: 30%;
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right: 50px;
     font-size: 25px;
+}
+
+.post {
+    font-size: 25px;
+    padding: 20px 0;
+}
+
+.post select {
+    font-size: 20px;
 }
 
 input[type=checkbox] {

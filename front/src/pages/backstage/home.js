@@ -4,12 +4,18 @@ import '../css/backstage.css'
 export default function Backstage() {
     const [imageFile, setImageFile] = useState(null);
     const [imageShow, setImageShow] = useState([]);
+    const [fetchedState, setFetchedState] = useState([]);
     const [imageDelete, setImageDelete] = useState([]);
+    const [post, setPost] = useState([]);
+
     useEffect(() => {
         (async () => {
-            const response = await (await fetch('http://localhost:5000/getAllImagesStatus')).json()
-            setImageShow(response);
-            const del = response.map(file => {
+            const imageResponse = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
+            const postResponse = await (await fetch('http://localhost:5000/getAllPostsDetails')).json();
+            setPost(postResponse);
+            setImageShow(imageResponse);
+            setFetchedState(imageResponse);
+            const del = imageResponse.map(file => {
                 return {...file, show: false};
             })
             setImageDelete(del);
@@ -32,6 +38,7 @@ export default function Backstage() {
         setImageFile(null);
         const response = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
         setImageShow(response);
+        setFetchedState(response);
         const del = response.map(file => {
             return {...file, show: false};
         })
@@ -67,6 +74,7 @@ export default function Backstage() {
             body: JSON.stringify(imageShow)
         })).json();
         if(response){
+            setFetchedState(imageShow);
             alert('render complete!');
         }
     }
@@ -112,21 +120,36 @@ export default function Backstage() {
 
     function deletePicChoice() {
         return <div>
-            {imageDelete.map(file => {
-            return <div key={file.name}>
-                <input type='checkbox' filename={file.name} onChange={(e)=>{
-                    const next = imageDelete.map(obj => {
-                        if(e.target.getAttribute('filename')===obj.name)
-                            return {...obj, show: !obj.show};
-                        return obj;
-                    })
-                    setImageDelete(next);
-                }}/>
-                <label>{file.name}</label>
-            </div>
-        })}
+            {imageDelete.map((file, index) => {
+                return <div key={file.name}>
+                    <input type='checkbox' filename={file.name} disabled={fetchedState[index].show} onChange={(e)=>{
+                        const next = imageDelete.map(obj => {
+                            if(e.target.getAttribute('filename')===obj.name)
+                                return {...obj, show: !obj.show};
+                            return obj;
+                        })
+                        setImageDelete(next);
+                    }}/>
+                    <label>{file.name}</label>
+                </div> 
+            })}
         {imageDelete?<input type='submit' value="delete" onClick={()=>handleClickDelete()}/>:<div/>}
         </div>
+    }
+
+    function renderPost() {
+        return post.map((file, index) => {
+            return <div className='post'>
+                <label>link{index+1}:</label>
+                <input value={file.link} style={{width: '100%', fontSize: '20px'}}/>
+                <label>type:</label>
+                <select>
+                    <option>post</option>
+                    <option>video</option>
+                </select>
+            </div>
+        })
+        
     }
 
     return <div>
@@ -143,13 +166,16 @@ export default function Backstage() {
                 <input type='submit' onClick={()=>handleSubmit()}/>
             </div>
         </div>
-        <div className="choosePic">
-            {imageShow.length?<p>render which pictures?</p>:<div/>}
-            {renderPicChoice()}
+        <div className='renderAndDelete'>
+            <div className="choosePic">
+                {imageShow.length?<p>render which pictures?</p>:<div/>}
+                {renderPicChoice()}
+            </div>
+            <div className="choosePic">
+                {imageDelete.length?<p>delete which pictures?</p>:<div/>}
+                {deletePicChoice()}
+            </div>
         </div>
-        <div className="choosePic">
-            {imageDelete.length?<p>delete which pictures?</p>:<div/>}
-            {deletePicChoice()}
-        </div>
+        {renderPost()}
     </div>
 }
