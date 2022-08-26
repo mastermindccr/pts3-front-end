@@ -7,7 +7,7 @@ export default function Backstage() {
     const [imageDelete, setImageDelete] = useState([]);
     useEffect(() => {
         (async () => {
-            const response = await (await fetch('http://localhost:5000/getImagesURL')).json()
+            const response = await (await fetch('http://localhost:5000/getAllImagesStatus')).json()
             setImageShow(response);
             const del = response.map(file => {
                 return {...file, show: false};
@@ -24,13 +24,13 @@ export default function Backstage() {
         if(await handleRepeated()) return;
         const formData = new FormData();
         formData.append('img', imageFile);
-        await fetch('http://localhost:5000/submit', {
+        await fetch('http://localhost:5000/submitImage', {
             method: 'POST',
             body: formData
         });
         document.getElementById('uploadImage').value = '';
         setImageFile(null);
-        const response = await (await fetch('http://localhost:5000/getImagesURL')).json();
+        const response = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
         setImageShow(response);
         const del = response.map(file => {
             return {...file, show: false};
@@ -58,7 +58,7 @@ export default function Backstage() {
     }
 
     async function handleClickRender() {
-        const response = await (await fetch('http://localhost:5000/render', {
+        const response = await (await fetch('http://localhost:5000/renderImages', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function Backstage() {
     }
 
     async function handleClickDelete() {
-        const response = await (await fetch('http://localhost:5000/delete', {
+        const response = await (await fetch('http://localhost:5000/deleteImages', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default function Backstage() {
         if(response){
             alert('delete complete!');
         }
-        const response2 = await (await fetch('http://localhost:5000/getImagesURL')).json();
+        const response2 = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
         setImageShow(response2);
         const del = response2.map(file => {
             return {...file, show: false};

@@ -5,7 +5,7 @@ export default function Home() {
     const [current, setCurrent] = useState(0);
     useEffect(() => {
         (async () => {
-            const response = await (await fetch('http://localhost:5000/getUsedBanners')).json()
+            const response = await (await fetch('http://localhost:5000/getImagesOnBanner')).json()
             setBanners(response);
         })();
     }, []);
