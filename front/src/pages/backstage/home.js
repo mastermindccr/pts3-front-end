@@ -22,7 +22,7 @@ export default function Backstage() {
         })();
     }, [])
 
-    async function handleSubmit() {
+    async function handleSubmitImg() {
         if(!imageFile){
             alert('please select a file!');
             return;
@@ -137,23 +137,47 @@ export default function Backstage() {
         </div>
     }
 
+    async function handleSubmitPost() {
+        const response = await (await fetch('http://localhost:5000/submitPost', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(post)
+        })).json();
+        if(response){
+            alert('Post sended!')
+        }
+    }
+
     function renderPost() {
-        return post.map((file, index) => {
-            return <div className='post'>
-                <label>link{index+1}:</label>
-                <input value={file.link} style={{width: '100%', fontSize: '20px'}}/>
-                <label>type:</label>
-                <select>
-                    <option>post</option>
-                    <option>video</option>
-                </select>
-            </div>
-        })
-        
+        return <div className='posts'>
+            {post.map((file, index) => {
+                return <div key={`post${index}`} className='post'>
+                    <label>link{index+1}:</label>
+                    <input value={file.link} style={{width: '100%', fontSize: '20px'}} onChange={e=>{
+                        let tmp = post.slice();
+                        tmp[index].link = e.target.value;
+                        setPost(tmp);
+                    }}/>
+                    <label>type:</label>
+                    <select value={post[index].type} onChange={(e)=>{
+                        let tmp = post.slice();
+                        tmp[index].type = e.target.value;
+                        setPost(tmp);
+                    }}>
+                        <option>post</option>
+                        <option>video</option>
+                    </select>
+                </div>
+            })}
+            <input type='submit' value='send' onClick={()=>handleSubmitPost()}/>
+        </div>
     }
 
     return <div>
-        <div className="submitPic">
+        <div className="submitImg">
             <h1>Submit Pictures</h1>
             <div className='border'>
                 <input type="file" id="uploadImage" onChange={event=>setImageFile(event.target.files[0])}/>
@@ -163,15 +187,15 @@ export default function Backstage() {
                     <p>filetype: {imageFile.type}</p>
                     <p>filesize: {imageFile.size} bytes</p>
                 </div>:<div/>}
-                <input type='submit' onClick={()=>handleSubmit()}/>
+                <input type='submit' onClick={()=>handleSubmitImg()}/>
             </div>
         </div>
         <div className='renderAndDelete'>
-            <div className="choosePic">
+            <div className="chooseImg">
                 {imageShow.length?<p>render which pictures?</p>:<div/>}
                 {renderPicChoice()}
             </div>
-            <div className="choosePic">
+            <div className="chooseImg">
                 {imageDelete.length?<p>delete which pictures?</p>:<div/>}
                 {deletePicChoice()}
             </div>

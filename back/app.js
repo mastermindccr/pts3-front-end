@@ -9,6 +9,7 @@ const deleteImages = require('./routes/deleteImages');
 const getImagesOnBanner = require('./routes/getImagesOnBanner');
 const getAllImagesStatus = require('./routes/getAllImagesStatus');
 const getAllPostsDetails = require('./routes/getAllPostsDetails');
+const submitPost = require('./routes/submitPost');
 const image = require('./routes/image');
 
 app.use(cors({origin: 'http://localhost:9000'}))
@@ -23,6 +24,7 @@ app.use('/deleteImages', deleteImages);
 app.use('/getImagesOnBanner', getImagesOnBanner);
 app.use('/getAllImagesStatus', getAllImagesStatus);
 app.use('/getAllPostsDetails', getAllPostsDetails);
+app.use('/submitPost', submitPost);
 app.use('/', image);
 
 app.listen('5000', ()=>{

@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     var ret = [];
     var length = Object.keys(file.choose).length || 0;
     for(let i in file.choose){
-        ret.push({link: i, type: file[i]});
+        ret.push({link: i, type: file.choose[i]});
     }
     for(let i = length; i<3;i++){
         ret.push({link: Object.keys(file.default)[0], type:Object.values(file.default)[0]});
