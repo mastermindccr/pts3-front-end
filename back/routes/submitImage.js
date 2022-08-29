@@ -11,12 +11,12 @@ const upload = multer({
 router.post('/', upload.single('img'), (req, res) => {
     if(req.file){
         const tempPath = req.file.path;
-        const targetPath = path.join(__dirname, `../public/img/${req.file.originalname}`);
+        const targetPath = path.join(__dirname, `../public/img/${req.body.filename}`);
         fs.rename(tempPath, targetPath, err => {
             if(err) console.error(err);
         })
         const file = require('../public/json/showPic.json');
-        file[req.file.originalname] = false;
+        file[req.body.filename] = false;
         fs.writeFile(path.join(__dirname, '../public/json/showPic.json'), JSON.stringify(file), (err) => {
             if(err) console.error(err);
         })

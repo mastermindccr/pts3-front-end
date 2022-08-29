@@ -30,6 +30,8 @@ export default function Backstage() {
         if(await handleRepeated()) return;
         const formData = new FormData();
         formData.append('img', imageFile);
+        formData.append('filename', imageFile.name);
+        console.log(imageFile);
         await fetch('http://localhost:5000/submitImage', {
             method: 'POST',
             body: formData
@@ -68,7 +70,7 @@ export default function Backstage() {
         const response = await (await fetch('http://localhost:5000/renderImages', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json; charset=utf-8",
                 "Accept": "application/json"
             },
             body: JSON.stringify(imageShow)
@@ -83,7 +85,7 @@ export default function Backstage() {
         const response = await (await fetch('http://localhost:5000/deleteImages', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json; charset=utf-8",
                 "Accept": "application/json"
             },
             body: JSON.stringify(imageDelete)
@@ -141,7 +143,7 @@ export default function Backstage() {
         const response = await (await fetch('http://localhost:5000/submitPost', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json; charset=utf-8",
                 "Accept": "application/json"
             },
             body: JSON.stringify(post)
