@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {FacebookEmbed} from 'react-social-media-embed'
+import {FacebookEmbed} from 'react-social-media-embed';
+import SwipeableViews from 'react-swipeable-views';
+import {autoPlay} from 'react-swipeable-views-utils';
 import './index.css';
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export default function Home() {
     const [banners, setBanners] = useState([]);
-    const [current, setCurrent] = useState(0);
     const [post, setPost] = useState([]);
     useEffect(() => {
         (async () => {
@@ -15,28 +18,13 @@ export default function Home() {
         })();
     }, []);
 
-    useEffect(() => {
-        const intervalId = setInterval(()=>{
-            setCurrent((current+1)%banners.length);
-        }, 300);
-        return () => clearInterval(intervalId);
-    })
-
     function renderBanner() {
-        return banners.length?
-        <img 
-            src={`${process.env.REACT_APP_backend_server}/${banners[current]}`}
-            alt={current} 
-            onError={(e)=>{
-                e.target.src = `${process.env.REACT_APP_backend_server}/default.png`;
-                e.target.onError = false;
-                (async () => {
-                    const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getImgsOnBanner`)).json()
-                    setBanners(response);
-                })();
-            }}
-        />:
-        <div/>
+        if(banners.length)
+            return <AutoPlaySwipeableViews enableMouseEvents axis='x-reverse'>
+                {banners.map((img, index) => {
+                    return <img src={`${process.env.REACT_APP_backend_server}/${img}`} alt="" key={index} style={{width:'100%'}}/>
+                })}
+            </AutoPlaySwipeableViews>
     }
 
     return <div>
@@ -46,11 +34,10 @@ export default function Home() {
         <div>
             {post.length?
             <div className='fbPages'>
-                {post.map(post => {
-                    return <FacebookEmbed url={post.link} width={500} height={500}/>
+                {post.map((post, index) => {
+                    return <FacebookEmbed url={post} width={500} height={500} key={index}/>
                 })}
             </div>:<div/>}
         </div>
     </div>
-    
 }

@@ -5,9 +5,8 @@ const router = app.Router();
 
 router.post('/', (req, res) => {
     const file = require('../public/json/showPost.json');
-    file.choose = {};
     for(let i in req.body){
-        file.choose[req.body[i].link] = req.body[i].type;
+        file.choose[i] = req.body[i];
     }
     fs.writeFile(path.join(__dirname, '../public/json/showPost.json'), JSON.stringify(file), (err) => {
         if(err){

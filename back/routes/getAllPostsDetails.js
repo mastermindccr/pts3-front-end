@@ -5,12 +5,12 @@ router.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
     const file = require('../public/json/showPost.json');
     var ret = [];
-    var length = Object.keys(file.choose).length || 0;
+    var length = file.choose.length;
     for(let i in file.choose){
-        ret.push({link: i, type: file.choose[i]});
+        ret.push(file.choose[i]);
     }
     for(let i = length; i<3;i++){
-        ret.push({link: Object.keys(file.default)[0], type:Object.values(file.default)[0]});
+        ret.push(file.default);
     }
     if(ret) res.json(ret);
     else res.json('');
