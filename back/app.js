@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
 const cors = require('cors')
+require('dotenv').config();
 
 const submitImage = require('./routes/submitImage');
 const checkImageExists = require('./routes/checkImageExists');
@@ -12,7 +13,7 @@ const getAllPostsDetails = require('./routes/getAllPostsDetails');
 const submitPost = require('./routes/submitPost');
 const image = require('./routes/image');
 
-app.use(cors({origin: 'http://localhost:9000'}))
+app.use(cors({origin: process.env.frontend_server}))
 app.use(express.static("public"));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +28,6 @@ app.use('/getAllPostsDetails', getAllPostsDetails);
 app.use('/submitPost', submitPost);
 app.use('/', image);
 
-app.listen('5000', ()=>{
+app.listen(process.env.PORT, ()=>{
     console.log('app is ready!')
 })

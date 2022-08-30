@@ -8,9 +8,9 @@ export default function Home() {
     const [post, setPost] = useState([]);
     useEffect(() => {
         (async () => {
-            const bannerResponse = await (await fetch('http://localhost:5000/getImagesOnBanner')).json();
+            const bannerResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getImagesOnBanner`)).json();
             setBanners(bannerResponse);
-            const postResponse = await (await fetch('http://localhost:5000/getAllPostsDetails')).json();
+            const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllPostsDetails`)).json();
             setPost(postResponse);
         })();
     }, []);
@@ -25,13 +25,13 @@ export default function Home() {
     function renderBanner() {
         return banners.length?
         <img 
-            src={`http://localhost:5000/${banners[current]}`}
+            src={`${process.env.REACT_APP_backend_server}/${banners[current]}`}
             alt={current} 
             onError={(e)=>{
-                e.target.src = 'http://localhost:5000/default.png';
+                e.target.src = `${process.env.REACT_APP_backend_server}/default.png`;
                 e.target.onError = false;
                 (async () => {
-                    const response = await (await fetch('http://localhost:5000/getImagesOnBanner')).json()
+                    const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getImagesOnBanner`)).json()
                     setBanners(response);
                 })();
             }}

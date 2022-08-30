@@ -10,8 +10,8 @@ export default function Backstage() {
 
     useEffect(() => {
         (async () => {
-            const imageResponse = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
-            const postResponse = await (await fetch('http://localhost:5000/getAllPostsDetails')).json();
+            const imageResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImagesStatus`)).json();
+            const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllPostsDetails`)).json();
             setPost(postResponse);
             setImageShow(imageResponse);
             setFetchedState(imageResponse);
@@ -32,13 +32,13 @@ export default function Backstage() {
         formData.append('img', imageFile);
         formData.append('filename', imageFile.name);
         console.log(imageFile);
-        await fetch('http://localhost:5000/submitImage', {
+        await fetch(`${process.env.REACT_APP_backend_server}/submitImage`, {
             method: 'POST',
             body: formData
         });
         document.getElementById('uploadImage').value = '';
         setImageFile(null);
-        const response = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImagesStatus`)).json();
         setImageShow(response);
         setFetchedState(response);
         const del = response.map(file => {
@@ -48,7 +48,7 @@ export default function Backstage() {
     }
 
     async function handleRepeated() {
-        const response = await (await fetch('http://localhost:5000/checkImageExists', {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/checkImageExists`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default function Backstage() {
     }
 
     async function handleClickRender() {
-        const response = await (await fetch('http://localhost:5000/renderImages', {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/renderImages`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -82,7 +82,7 @@ export default function Backstage() {
     }
 
     async function handleClickDelete() {
-        const response = await (await fetch('http://localhost:5000/deleteImages', {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/deleteImages`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -93,7 +93,7 @@ export default function Backstage() {
         if(response){
             alert('delete complete!');
         }
-        const response2 = await (await fetch('http://localhost:5000/getAllImagesStatus')).json();
+        const response2 = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImagesStatus`)).json();
         setImageShow(response2);
         const del = response2.map(file => {
             return {...file, show: false};
@@ -140,7 +140,7 @@ export default function Backstage() {
     }
 
     async function handleSubmitPost() {
-        const response = await (await fetch('http://localhost:5000/submitPost', {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/submitPost`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
