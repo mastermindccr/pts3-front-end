@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/home.css'
+import './submitImg.css';
 
 export default function SubmitImg(props) {
 
@@ -19,7 +19,7 @@ export default function SubmitImg(props) {
         document.getElementById('uploadImg').value = '';
         props.setImgFile(null);
         const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImgsStatus`)).json();
-        props.setImgShow(response);
+        props.setImgRender(response);
         props.setFetchedState(response);
         const del = response.map(file => {
             return {...file, show: false};

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {FacebookEmbed} from 'react-social-media-embed'
-import '../css/home.css';
+import './index.css';
 
 export default function Home() {
     const [banners, setBanners] = useState([]);
@@ -47,7 +47,7 @@ export default function Home() {
             {post.length?
             <div className='fbPages'>
                 {post.map(post => {
-                    return <FacebookEmbed url={post.link} width={600} height={500}/>
+                    return <FacebookEmbed url={post.link} width={500} height={500}/>
                 })}
             </div>:<div/>}
         </div>

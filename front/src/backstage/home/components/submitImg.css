@@ -1,0 +1,18 @@
+.submitImg {
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.border input {
+    font-size: 20px;
+    margin: 1em auto;
+}
+
+.border {
+    display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin: 0 30%;
+}
