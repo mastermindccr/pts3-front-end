@@ -1,141 +1,98 @@
 import React, {useEffect, useState} from 'react';
-import '../css/backstage.css'
+import SubmitImg from './submitImg';
+import '../css/home.css'
 
 export default function Backstage() {
-    const [imageFile, setImageFile] = useState(null);
-    const [imageShow, setImageShow] = useState([]);
+    const [imgFile, setImgFile] = useState(null);
+    const [imgShow, setImgShow] = useState([]);
     const [fetchedState, setFetchedState] = useState([]);
-    const [imageDelete, setImageDelete] = useState([]);
+    const [imgDelete, setImgDelete] = useState([]);
     const [post, setPost] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const imageResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImagesStatus`)).json();
+            const imgResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImgsStatus`)).json();
             const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllPostsDetails`)).json();
             setPost(postResponse);
-            setImageShow(imageResponse);
-            setFetchedState(imageResponse);
-            const del = imageResponse.map(file => {
+            setImgShow(imgResponse);
+            setFetchedState(imgResponse);
+            const del = imgResponse.map(file => {
                 return {...file, show: false};
             })
-            setImageDelete(del);
+            setImgDelete(del);
         })();
     }, [])
 
-    async function handleSubmitImg() {
-        if(!imageFile){
-            alert('please select a file!');
-            return;
-        }
-        if(await handleRepeated()) return;
-        const formData = new FormData();
-        formData.append('img', imageFile);
-        formData.append('filename', imageFile.name);
-        console.log(imageFile);
-        await fetch(`${process.env.REACT_APP_backend_server}/submitImage`, {
-            method: 'POST',
-            body: formData
-        });
-        document.getElementById('uploadImage').value = '';
-        setImageFile(null);
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImagesStatus`)).json();
-        setImageShow(response);
-        setFetchedState(response);
-        const del = response.map(file => {
-            return {...file, show: false};
-        })
-        setImageDelete(del);
-    }
-
-    async function handleRepeated() {
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/checkImageExists`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                "name": imageFile.name
-            })
-        })).json()
-        if(response === 'repeated'){
-            alert('please upload another one!');
-            return true;
-        }
-        alert('upload completed!');
-        return false;
-    }
-
     async function handleClickRender() {
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/renderImages`, {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/renderImgs`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
-                "Accept": "application/json"
+                "Accept": "application/json; charset=utf-8"
             },
-            body: JSON.stringify(imageShow)
+            body: JSON.stringify(imgShow)
         })).json();
         if(response){
-            setFetchedState(imageShow);
+            setFetchedState(imgShow);
             alert('render complete!');
         }
     }
 
     async function handleClickDelete() {
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/deleteImages`, {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/deleteImgs`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
-                "Accept": "application/json"
+                "Accept": "application/json; charset=utf-8"
             },
-            body: JSON.stringify(imageDelete)
+            body: JSON.stringify(imgDelete)
         })).json();
         if(response){
             alert('delete complete!');
         }
-        const response2 = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImagesStatus`)).json();
-        setImageShow(response2);
+        const response2 = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImgsStatus`)).json();
+        setImgShow(response2);
         const del = response2.map(file => {
             return {...file, show: false};
         })
-        setImageDelete(del);
+        setImgDelete(del);
     }
 
     function renderPicChoice() {
         return <div>
-            {imageShow.map(file => {
+            {imgShow.map(file => {
             return <div key={file.name}>
                 <input type='checkbox' filename={file.name} checked={file.show} onChange={(e)=>{
-                    const next = imageShow.map(obj => {
+                    const next = imgShow.map(obj => {
                         if(e.target.getAttribute('filename')===obj.name)
                             return {...obj, show: !obj.show};
                         return obj;
                     })
-                    setImageShow(next);
+                    setImgShow(next);
                 }}/>
                 <label>{file.name}</label>
             </div>
         })}
-        {imageShow?<input type='submit' value="render" onClick={()=>handleClickRender()}/>:<div/>}
+        {imgShow?<input type='submit' value="render" onClick={()=>handleClickRender()}/>:<div/>}
         </div>
     }
 
     function deletePicChoice() {
         return <div>
-            {imageDelete.map((file, index) => {
+            {imgDelete.map((file, index) => {
                 return <div key={file.name}>
                     <input type='checkbox' filename={file.name} disabled={fetchedState[index].show} onChange={(e)=>{
-                        const next = imageDelete.map(obj => {
+                        const next = imgDelete.map(obj => {
                             if(e.target.getAttribute('filename')===obj.name)
                                 return {...obj, show: !obj.show};
                             return obj;
                         })
-                        setImageDelete(next);
+                        setImgDelete(next);
                     }}/>
                     <label>{file.name}</label>
                 </div> 
             })}
-        {imageDelete?<input type='submit' value="delete" onClick={()=>handleClickDelete()}/>:<div/>}
+        {imgDelete?<input type='submit' value="delete" onClick={()=>handleClickDelete()}/>:<div/>}
         </div>
     }
 
@@ -144,7 +101,7 @@ export default function Backstage() {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
-                "Accept": "application/json"
+                "Accept": "application/json; charset=utf-8"
             },
             body: JSON.stringify(post)
         })).json();
@@ -179,26 +136,21 @@ export default function Backstage() {
     }
 
     return <div>
-        <div className="submitImg">
-            <h1>Submit Pictures</h1>
-            <div className='border'>
-                <input type="file" id="uploadImage" onChange={event=>setImageFile(event.target.files[0])}/>
-                {imageFile?
-                <div>
-                    <p>filename: {imageFile.name}</p>
-                    <p>filetype: {imageFile.type}</p>
-                    <p>filesize: {imageFile.size} bytes</p>
-                </div>:<div/>}
-                <input type='submit' onClick={()=>handleSubmitImg()}/>
-            </div>
-        </div>
+        <SubmitImg 
+            imgFile={imgFile} 
+            setImgFile={setImgFile} 
+            setImgShow={setImgShow}
+            setFetchedState={setFetchedState}
+            setImgDelete={setImgDelete}
+        />
+
         <div className='renderAndDelete'>
             <div className="chooseImg">
-                {imageShow.length?<p>render which pictures?</p>:<div/>}
+                {imgShow.length?<p>render which pictures?</p>:<div/>}
                 {renderPicChoice()}
             </div>
             <div className="chooseImg">
-                {imageDelete.length?<p>delete which pictures?</p>:<div/>}
+                {imgDelete.length?<p>delete which pictures?</p>:<div/>}
                 {deletePicChoice()}
             </div>
         </div>

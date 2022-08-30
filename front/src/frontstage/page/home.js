@@ -8,7 +8,7 @@ export default function Home() {
     const [post, setPost] = useState([]);
     useEffect(() => {
         (async () => {
-            const bannerResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getImagesOnBanner`)).json();
+            const bannerResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getImgsOnBanner`)).json();
             setBanners(bannerResponse);
             const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllPostsDetails`)).json();
             setPost(postResponse);
@@ -31,7 +31,7 @@ export default function Home() {
                 e.target.src = `${process.env.REACT_APP_backend_server}/default.png`;
                 e.target.onError = false;
                 (async () => {
-                    const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getImagesOnBanner`)).json()
+                    const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getImgsOnBanner`)).json()
                     setBanners(response);
                 })();
             }}

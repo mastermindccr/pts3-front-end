@@ -1,14 +1,14 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import ReactDom from 'react-dom/client';
-import Home from './pages/frontstage/home.js'
-import Backstage from './pages/backstage/home.js'
+import FrontHome from './frontstage/page/home';
+import BackHome from './backstage/page/home';
 
 function Main () {
     return <Router>
         <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='/backstage' element={<Backstage/>} />
+            <Route path='/' element={<FrontHome/>} />
+            <Route path='/backstage' element={<BackHome/>} />
         </Routes>
     </Router>
 }

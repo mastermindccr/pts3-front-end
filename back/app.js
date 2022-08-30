@@ -3,30 +3,30 @@ const app = express();
 const cors = require('cors')
 require('dotenv').config();
 
-const submitImage = require('./routes/submitImage');
-const checkImageExists = require('./routes/checkImageExists');
-const renderImages = require('./routes/renderImages');
-const deleteImages = require('./routes/deleteImages');
-const getImagesOnBanner = require('./routes/getImagesOnBanner');
-const getAllImagesStatus = require('./routes/getAllImagesStatus');
+const submitImg = require('./routes/submitImg');
+const checkImgExists = require('./routes/checkImgExists');
+const renderImgs = require('./routes/renderImgs');
+const deleteImgs = require('./routes/deleteImgs');
+const getImgsOnBanner = require('./routes/getImgsOnBanner');
+const getAllImgsStatus = require('./routes/getAllImgsStatus');
 const getAllPostsDetails = require('./routes/getAllPostsDetails');
 const submitPost = require('./routes/submitPost');
-const image = require('./routes/image');
+const img = require('./routes/img');
 
 app.use(cors({origin: process.env.frontend_server}))
 app.use(express.static("public"));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/submitImage', submitImage);
-app.use('/checkImageExists', checkImageExists);
-app.use('/renderImages', renderImages);
-app.use('/deleteImages', deleteImages);
-app.use('/getImagesOnBanner', getImagesOnBanner);
-app.use('/getAllImagesStatus', getAllImagesStatus);
+app.use('/submitImg', submitImg);
+app.use('/checkImgExists', checkImgExists);
+app.use('/renderImgs', renderImgs);
+app.use('/deleteImgs', deleteImgs);
+app.use('/getImgsOnBanner', getImgsOnBanner);
+app.use('/getAllImgsStatus', getAllImgsStatus);
 app.use('/getAllPostsDetails', getAllPostsDetails);
 app.use('/submitPost', submitPost);
-app.use('/', image);
+app.use('/', img);
 
 app.listen(process.env.PORT, ()=>{
     console.log('app is ready!')
