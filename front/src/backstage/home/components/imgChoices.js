@@ -12,11 +12,11 @@ export default function ImgChoices(props) {
             },
             body: JSON.stringify(sendData)
         })).json();
-        if(response){
+        if(response==='good'){
             alert(`${action} complete!`);
         }
         else{
-            alert('server error!')
+            alert('invalid timestamp!')
             return;
         }
 
@@ -35,19 +35,46 @@ export default function ImgChoices(props) {
         return <div>
             {obj.map((file, index) => {
                 let disabled = action==='render'?false:props.fetchedState[index].show;
-                return <div key={file.name}>
-                    <input type='checkbox' filename={file.name} checked={file.show} disabled={disabled} onChange={(e)=>{
-                        const next = obj.map(img => {
-                            if(e.target.getAttribute('filename')===img.name){
-                                return {...img, show: !img.show};
-                            }
-                                
-                            return img;
-                        })
-                        set_obj(next);
-                    }}/>
-                    <label>{file.name}</label>
-                </div>
+
+                return(
+                    <div className="file" key={file.name}>
+                        <input type='checkbox' filename={file.name} checked={file.show} disabled={disabled} onChange={(e)=>{
+                            const next = obj.map(img => {
+                                if(e.target.getAttribute('filename')===img.name){
+                                    return {...img, show: !img.show};
+                                }    
+                                return img;
+                            })
+                            set_obj(next);
+                        }}/>
+                        <label>{file.name}</label>
+                        {action==='render'?<div>
+                            <div>
+                                <label>start: </label>
+                                <input type='datetime-local' value={file.start} filename={file.name} onChange={(e)=>{
+                                console.log(e.target.value);
+                                const next = obj.map(img => {
+                                    if(e.target.getAttribute('filename')===img.name){
+                                        return {...img, start: e.target.value};
+                                    }   
+                                    return img;
+                                })
+                                set_obj(next);
+                            }}/></div>
+                            <div>
+                                <label>end:</label>
+                                <input type='datetime-local' value={file.end} filename={file.name} onChange={(e)=>{
+                                const next = obj.map(img => {
+                                    if(e.target.getAttribute('filename')===img.name){
+                                        return {...img, end: e.target.value};
+                                    }   
+                                    return img;
+                                })
+                                set_obj(next);
+                            }}/></div>
+                        </div>:null}
+                    </div>
+                )
         })}
         {obj?<input type='submit' value={action} onClick={()=>handleClick(action)}/>:<div/>}
         </div>

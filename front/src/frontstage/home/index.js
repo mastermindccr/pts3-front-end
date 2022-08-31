@@ -23,9 +23,9 @@ export default function Home() {
         window.fbAsyncInit = function() {
             //SDK loaded, initialize it
             FB.init({
-                version    : 'v11.0'
+                version: 'v11.0'
             });
-            FB.XFBML.parse();
+            setTimeout(()=>{FB.XFBML.parse()}, 100)
         };
     
         //load the JavaScript SDK
