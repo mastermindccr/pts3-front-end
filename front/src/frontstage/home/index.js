@@ -1,5 +1,6 @@
+/*global FB*/
+
 import React, {useState, useEffect} from 'react';
-import {FacebookEmbed} from 'react-social-media-embed';
 import SwipeableViews from 'react-swipeable-views';
 import {autoPlay} from 'react-swipeable-views-utils';
 import './index.css';
@@ -18,6 +19,25 @@ export default function Home() {
         })();
     }, []);
 
+    useEffect(()=>{
+        window.fbAsyncInit = function() {
+            //SDK loaded, initialize it
+            FB.init({
+                version    : 'v11.0'
+            });
+            FB.XFBML.parse();
+        };
+    
+        //load the JavaScript SDK
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/zh_TW/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    })
+
     function renderBanner() {
         if(banners.length)
             return <AutoPlaySwipeableViews enableMouseEvents axis='x-reverse'>
@@ -35,9 +55,9 @@ export default function Home() {
             {post.length?
             <div className='fbPages'>
                 {post.map((post, index) => {
-                    return <FacebookEmbed url={post} width={500} height={500} key={index}/>
+                    return <div><div class="fb-page" href={post} tabs="timeline" width="500" height="500" key={index}></div></div>
                 })}
-            </div>:<div/>}
+            </div>:null}
         </div>
     </div>
 }

@@ -28,6 +28,6 @@ export default function Post(props) {
                 }}/>
             </div>
         })}
-        <input type='submit' value='send' onClick={()=>handleSubmitPost()}/>
+        <input type='submit' value='send' onClick={()=>{handleSubmitPost()}}/>
     </div>
 }

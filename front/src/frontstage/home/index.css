@@ -1,17 +1,10 @@
 .fbPages {
     display: flex;
     justify-content: center;
-    
-}
-
-.fbPages > div > div > div{
-    overflow-y: scroll !important;
     margin: 0 auto;
 }
 
-.fbPages > div{
-    overflow-x: visible !important;
-    text-align: center;
+.fbPages > div {
     margin: 0 50px;
     border-style: solid;
 }
