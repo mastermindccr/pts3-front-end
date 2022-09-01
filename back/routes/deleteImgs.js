@@ -19,4 +19,4 @@ router.post('/', (req, res) => {
     res.json('good');
 })
 
-module.exports = router
+module.exports = router;

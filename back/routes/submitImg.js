@@ -23,6 +23,7 @@ router.post('/', upload.single('img'), (req, res) => {
         file[req.body.filename] = {
             start: d,
             end: d,
+            order: Object.keys(file).length+1,
             show: false
         };
         fs.writeFile(path.join(__dirname, '../public/json/showPic.json'), JSON.stringify(file), (err) => {

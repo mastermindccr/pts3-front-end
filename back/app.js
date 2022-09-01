@@ -26,7 +26,13 @@ app.use('/getImgsOnBanner', getImgsOnBanner);
 app.use('/getAllImgsStatus', getAllImgsStatus);
 app.use('/getAllPostsDetails', getAllPostsDetails);
 app.use('/submitPost', submitPost);
-app.use('/', img);
+app.use('/img', img);
+app.get('*', function (req, res){
+    res.status(404).send({
+        status: { type: 'error', message: 'Invalid Request.' },
+        data: null 
+    });
+});
 
 app.listen(process.env.PORT, ()=>{
     console.log('app is ready!')

@@ -20,6 +20,7 @@ router.post('/', (req, res) => {
             file[req.body[i].name] = {
                 start: jsonWithTimezone(req.body[i].start),
                 end: jsonWithTimezone(req.body[i].end),
+                order: req.body[i].order,
                 show: req.body[i].show
             };
         }

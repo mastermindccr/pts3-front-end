@@ -35,7 +35,6 @@ export default function ImgChoices(props) {
         return <div>
             {obj.map((file, index) => {
                 let disabled = action==='render'?false:props.fetchedState[index].show;
-
                 return(
                     <div className="file" key={file.name}>
                         <input type='checkbox' filename={file.name} checked={file.show} disabled={disabled} onChange={(e)=>{
@@ -52,35 +51,62 @@ export default function ImgChoices(props) {
                             <div>
                                 <label>start: </label>
                                 <input type='datetime-local' value={file.start} filename={file.name} onChange={(e)=>{
-                                console.log(e.target.value);
-                                const next = obj.map(img => {
-                                    if(e.target.getAttribute('filename')===img.name){
-                                        return {...img, start: e.target.value};
-                                    }   
-                                    return img;
-                                })
-                                set_obj(next);
-                            }}/></div>
+                                    const next = obj.map(img => {
+                                        if(e.target.getAttribute('filename')===img.name){
+                                            return {...img, start: e.target.value};
+                                        }   
+                                        return img;
+                                    })
+                                    set_obj(next);
+                                }}/>
+                            </div>
                             <div>
                                 <label>end:</label>
                                 <input type='datetime-local' value={file.end} filename={file.name} onChange={(e)=>{
-                                const next = obj.map(img => {
-                                    if(e.target.getAttribute('filename')===img.name){
-                                        return {...img, end: e.target.value};
-                                    }   
-                                    return img;
-                                })
-                                set_obj(next);
-                            }}/></div>
+                                    const next = obj.map(img => {
+                                        if(e.target.getAttribute('filename')===img.name){
+                                            return {...img, end: e.target.value};
+                                        }   
+                                        return img;
+                                    })
+                                    set_obj(next);
+                                }}/>
+                            </div>
+                            <div>
+                                <label>order:</label>
+                                <input type='number' value={file.order} filename={file.name} onChange={(e)=>{
+                                    const next = obj.map(img => {
+                                        if(e.target.getAttribute('filename')===img.name){
+                                            return {...img, order: e.target.value};
+                                        }   
+                                        return img;
+                                    })
+                                    set_obj(next);
+                                }}
+                                onKeyDown={(e)=>{
+                                    if(e.key==='Enter'){
+                                        const idx = e.target.value>obj.length-1?obj.length-1:(e.target.value<1)?0:e.target.value-1;
+                                        let next = obj.slice();
+                                        next.splice(index, 1);
+                                        next.splice(idx, 0, file);
+                                        next = next.map((value, key)=>{
+                                            return {...value, order: key+1};
+                                        })
+                                        set_obj(next);
+                                    }
+                                }}/>
+                            </div>
                         </div>:null}
-                    </div>
+                        
+                    </div> 
                 )
-        })}
-        {obj?<input type='submit' value={action} onClick={()=>handleClick(action)}/>:<div/>}
+            })}
+            {obj?<input type='submit' value={action} onClick={()=>handleClick(action)}/>:<div/>}
         </div>
     }
 
-    return <div className='renderAndDelete'>
+    return (
+        <div className='renderAndDelete'>
             <div className="chooseImg">
                 {props.imgRender.length?<p>render which pictures?</p>:<div/>}
                 {showImageChoice('render')}
@@ -90,4 +116,5 @@ export default function ImgChoices(props) {
                 {showImageChoice('delete')}
             </div>
         </div>
+    )
 }

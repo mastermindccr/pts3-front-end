@@ -2,24 +2,32 @@ const app = require('express');
 const router = app.Router();
 
 router.get('/', (req, res) => {
-
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
     const file = require('../public/json/showPic.json');
-
+    var tmp = [];
+    for(let i in file){
+        tmp.push({
+            name: i,
+            start: file[i].start, 
+            end: file[i].end,
+            order: file[i].order,
+            show: file[i].show
+        });
+    }
+    tmp.sort((a, b) => a.order<b.order?-1:1)
     var ret = [];
-    let keys = Object.keys(file).reverse();
-    for(let i in keys){
+    for(let i in tmp){
         if(ret.length==8) break;
-        if(file[keys[i]].show){
-            let start = file[keys[i]].start;
-            let end = file[keys[i]].end;
+        if(tmp[i].show){
+            let start = tmp[i].start;
+            let end = tmp[i].end;
             let now = new Date().toJSON();
             if(start<now && now<end){
-                ret.push(keys[i]);
+                ret.push(tmp[i].name);
             }
         }
     }
-    if(!ret.length) ret.push('default');
+    if(!ret.length) ret.push('default.png');
     res.json(ret);
 })
 

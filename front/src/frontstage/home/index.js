@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {autoPlay} from 'react-swipeable-views-utils';
+import MobileStepper from '@material-ui/core/MobileStepper/MobileStepper';
 import './index.css';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -42,7 +43,7 @@ export default function Home() {
         if(banners.length)
             return <AutoPlaySwipeableViews enableMouseEvents axis='x-reverse'>
                 {banners.map((img, index) => {
-                    return <img src={`${process.env.REACT_APP_backend_server}/${img}`} alt="" key={index} style={{width:'100%'}}/>
+                    return <img src={`${process.env.REACT_APP_backend_server}/img/${img}`} alt="" key={index} style={{width:'100%'}}/>
                 })}
             </AutoPlaySwipeableViews>
     }

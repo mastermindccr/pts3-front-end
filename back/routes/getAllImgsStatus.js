@@ -24,12 +24,13 @@ router.get('/', (req, res) => {
         ret.push({
             name: i,
             start: jsonWithTimezone(file[i].start), 
-            end: jsonWithTimezone(file[i].end), 
+            end: jsonWithTimezone(file[i].end),
+            order: file[i].order,
             show: file[i].show
         });
     }
-    if(ret) res.json(ret);
-    else res.json('');
+    ret.sort((a, b) => a.order<b.order?-1:1)
+    res.json(ret);
 })
 
 module.exports = router;
