@@ -2,8 +2,6 @@ const app = require('express');
 const router = app.Router();
 
 router.get('/', (req, res) => {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-
     Date.prototype.addHours = function(h) {
         this.setTime(this.getTime() + (2*h*60*1000));
         return this;
@@ -18,7 +16,8 @@ router.get('/', (req, res) => {
         json = json.slice(0, last_index);
         return json;
     }
-    
+
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
     const file = require('../public/json/showPic.json');
     var ret = [];
     for(let i in file){
