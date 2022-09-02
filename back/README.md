@@ -1,9 +1,8 @@
-### public
-# image
+# public
+### image
 There is a default img when there's no banner playing.
-# json
-There are two json files:
-    -imgs: record info and status:
+### json
+    -imgs:
         *using uuid as key
         *name: name of the img
         *start: the starting time of the image on the banner
@@ -12,19 +11,20 @@ There are two json files:
             0.neither rendered or deleted
             1.rendered
     -fanPages: record urls of the current fan pages rendering on the front stage
-###### url path are designed in RESTful pattern
-### routers
+<div style="border: 1px solid black">
+    <strong>url paths are designed in RESTful pattern</strong>
+</div>
+# routers
 distinguish routes for admin and public
-### routes
-# admin
-routes for images and fan pages:
+# routes
+### admin
     -imgs
         *GET  /admin/imgs       : get status of all submitted images
         *POST /admin/imgs       : update status of all submitted images
         *POST /admin/imgs/{name}: upload an image
     -fanPages
         *POST /admin/fanPages   : update urls of all the fan pages
-# public
+### public
     -fanPages
         *GET /public/fanPages   : get all urls of the fan pages
     -banners
