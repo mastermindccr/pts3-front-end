@@ -13,9 +13,9 @@ There is a default img when there's no banner playing.
     -fanPages: record urls of the current fan pages rendering on the front stage
 
 # routers
-distinguish routes for admin and public
+distinguish routes for admin and public.
 <div style="border: 1px solid black">
-    <strong>url paths are designed in RESTful pattern</strong>
+    <strong>url paths are designed in RESTful pattern.</strong>
 </div>
 
 # routes
