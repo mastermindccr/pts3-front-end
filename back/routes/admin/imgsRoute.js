@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
     }
 
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    const file = require('../../public/json/showPic.json');
+    const file = require('../../public/json/imgs.json');
     var ret = [];
     for(let i in file){
         ret.push({
@@ -50,7 +50,7 @@ router.post('/', (req, res) => {
         return json;
     }
 
-    const file = require('../../public/json/showPic.json');
+    const file = require('../../public/json/imgs.json');
     for(let i in req.body){
         if(req.body[i].show==2){
             fs.unlink(path.join(__dirname, `../../public/img/${req.body[i].uuid}`), (err)=>{
@@ -69,7 +69,7 @@ router.post('/', (req, res) => {
         }
         
     }
-    fs.writeFile(path.join(__dirname, '../../public/json/showPic.json'), JSON.stringify(file), (err) => {
+    fs.writeFile(path.join(__dirname, '../../public/json/imgs.json'), JSON.stringify(file), (err) => {
         if(err) console.error(err);
     })
     res.json('good');
@@ -84,7 +84,7 @@ router.post('/:name', upload.single('img'), (req, res) => {
             if(err) console.error(err);
         })
 
-        const file = require('../../public/json/showPic.json');
+        const file = require('../../public/json/imgs.json');
         let d = new Date().toJSON();
         let last_index = d.lastIndexOf(':');
         d = d.slice(0, last_index);
@@ -96,7 +96,7 @@ router.post('/:name', upload.single('img'), (req, res) => {
             order: Object.keys(file).length+1,
             show: 0
         };
-        fs.writeFile(path.join(__dirname, '../../public/json/showPic.json'), JSON.stringify(file), (err) => {
+        fs.writeFile(path.join(__dirname, '../../public/json/imgs.json'), JSON.stringify(file), (err) => {
             if(err) console.error(err);
         })
     }

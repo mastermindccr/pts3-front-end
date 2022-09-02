@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import SubmitImg from './components/submitImg';
 import ImgChoices from './components/imgChoices';
-import Post from './components/post';
+import FanPages from './components/fanPages';
 
 export default function Home() {
     const [imgFile, setImgFile] = useState(null);
     const [imgStatus, setImgStatus] = useState([]);
-    const [post, setPost] = useState([]);
+    const [fanPages, setFanPages] = useState([]);
 
     useEffect(() => {
         (async () => {
             const imgResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/admin/imgs`)).json();
-            const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/posts`)).json();
-            setPost(postResponse);
+            const fanPagesResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/fanPages`)).json();
+            setFanPages(fanPagesResponse);
             setImgStatus(imgResponse);
         })();
     }, [])
@@ -28,9 +28,9 @@ export default function Home() {
             imgStatus={imgStatus}
             setImgStatus={setImgStatus}
         />
-        <Post
-            post={post}
-            setPost={setPost}
+        <FanPages
+            fanPages={fanPages}
+            setFanPages={setFanPages}
         />
     </div>
 }

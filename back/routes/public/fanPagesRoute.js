@@ -3,7 +3,7 @@ const router = app.Router();
 
 router.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
-    const file = require('../../public/json/showPost.json');
+    const file = require('../../public/json/fanPages.json');
     var ret = [];
     var length = file.choose.length;
     for(let i in file.choose){

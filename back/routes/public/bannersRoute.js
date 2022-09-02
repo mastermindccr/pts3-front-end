@@ -3,7 +3,7 @@ const router = app.Router();
 
 router.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
-    const file = require('../../public/json/showPic.json');
+    const file = require('../../public/json/imgs.json');
     var tmp = [];
     for(let i in file){
         tmp.push({

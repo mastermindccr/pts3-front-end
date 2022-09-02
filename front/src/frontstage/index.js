@@ -9,13 +9,13 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export default function Home() {
     const [banners, setBanners] = useState([]);
-    const [post, setPost] = useState([]);
+    const [fanPages, setFanPages] = useState([]);
     useEffect(() => {
         (async () => {
             const bannerResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/banners`)).json();
             setBanners(bannerResponse);
-            const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/posts`)).json();
-            setPost(postResponse);
+            const fanPagesResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/fanPages`)).json();
+            setFanPages(fanPagesResponse);
         })();
     }, []);
 
@@ -52,10 +52,10 @@ export default function Home() {
             {renderBanner()}
         </div>
         <div>
-            {post.length?
+            {fanPages.length?
             <div className='fbPages'>
-                {post.map((post, index) => {
-                    return <div><div class="fb-page" href={post} tabs="timeline" width="500" height="500" key={index}></div></div>
+                {fanPages.map((fanPage, index) => {
+                    return <div><div class="fb-page" href={fanPage} tabs="timeline" width="500" height="500" key={index}></div></div>
                 })}
             </div>:null}
         </div>
