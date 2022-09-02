@@ -11,25 +11,19 @@ export default function SubmitImg(props) {
         if(handleRepeated()) return;
         const formData = new FormData();
         formData.append('img', props.imgFile);
-        formData.append('filename', props.imgFile.name);
-        await fetch(`${process.env.REACT_APP_backend_server}/submitImg`, {
+        await fetch(`${process.env.REACT_APP_backend_server}/admin/imgs/${props.imgFile.name}`, {
             method: 'POST',
             body: formData
         });
         document.getElementById('uploadImg').value = '';
         props.setImgFile(null);
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllImgsStatus`)).json();
-        props.setImgRender(response);
-        props.setFetchedState(response);
-        const del = response.map(file => {
-            return {...file, show: false};
-        })
-        props.setImgDelete(del);
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/admin/imgs`)).json();
+        props.setImgStatus(response);
     }
 
     function handleRepeated() {
-        for(let i in props.imgRender){
-            if(props.imgRender[i].name===props.imgFile.name){
+        for(let i in props.imgStatus){
+            if(props.imgStatus[i].name===props.imgFile.name){
                 alert('please upload another one!');
                 return true;
             }

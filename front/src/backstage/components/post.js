@@ -4,7 +4,7 @@ import './post.css'
 export default function Post(props) {
 
     async function handleSubmitPost() {
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/submitPost`, {
+        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/admin/posts`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",

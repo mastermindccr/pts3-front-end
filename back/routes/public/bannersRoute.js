@@ -3,7 +3,7 @@ const router = app.Router();
 
 router.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
-    const file = require('../public/json/showPic.json');
+    const file = require('../../public/json/showPic.json');
     var tmp = [];
     for(let i in file){
         tmp.push({
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     var ret = [];
     for(let i in tmp){
         if(ret.length==8) break;
-        if(tmp[i].show){
+        if(tmp[i].show==1){
             let start = tmp[i].start;
             let end = tmp[i].end;
             let now = new Date().toJSON();

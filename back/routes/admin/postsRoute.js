@@ -4,11 +4,11 @@ const fs = require('fs');
 const router = app.Router();
 
 router.post('/', (req, res) => {
-    const file = require('../public/json/showPost.json');
+    const file = require('../../public/json/showPost.json');
     for(let i in req.body){
         file.choose[i] = req.body[i];
     }
-    fs.writeFile(path.join(__dirname, '../public/json/showPost.json'), JSON.stringify(file), (err) => {
+    fs.writeFile(path.join(__dirname, '../../public/json/showPost.json'), JSON.stringify(file), (err) => {
         if(err){
             console.error(err);
             res.end(404, 'sorry for some internal server errors');

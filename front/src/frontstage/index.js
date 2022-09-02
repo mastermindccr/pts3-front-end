@@ -12,9 +12,9 @@ export default function Home() {
     const [post, setPost] = useState([]);
     useEffect(() => {
         (async () => {
-            const bannerResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getImgsOnBanner`)).json();
+            const bannerResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/banners`)).json();
             setBanners(bannerResponse);
-            const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/getAllPostsDetails`)).json();
+            const postResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/posts`)).json();
             setPost(postResponse);
         })();
     }, []);
