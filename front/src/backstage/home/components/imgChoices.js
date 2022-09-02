@@ -36,10 +36,10 @@ export default function ImgChoices(props) {
             {obj.map((file, index) => {
                 let disabled = action==='render'?false:props.fetchedState[index].show;
                 return(
-                    <div className="file" key={file.name}>
-                        <input type='checkbox' filename={file.name} checked={file.show} disabled={disabled} onChange={(e)=>{
+                    <div className="file" key={file.uuid}>
+                        <input type='checkbox' uuid={file.uuid} checked={file.show} disabled={disabled} onChange={(e)=>{
                             const next = obj.map(img => {
-                                if(e.target.getAttribute('filename')===img.name){
+                                if(e.target.getAttribute('uuid')===img.uuid){
                                     return {...img, show: !img.show};
                                 }    
                                 return img;
@@ -50,9 +50,9 @@ export default function ImgChoices(props) {
                         {action==='render'?<div>
                             <div>
                                 <label>start: </label>
-                                <input type='datetime-local' value={file.start} filename={file.name} onChange={(e)=>{
+                                <input type='datetime-local' value={file.start} uuid={file.uuid} onChange={(e)=>{
                                     const next = obj.map(img => {
-                                        if(e.target.getAttribute('filename')===img.name){
+                                        if(e.target.getAttribute('uuid')===img.uuid){
                                             return {...img, start: e.target.value};
                                         }   
                                         return img;
@@ -62,9 +62,9 @@ export default function ImgChoices(props) {
                             </div>
                             <div>
                                 <label>end:</label>
-                                <input type='datetime-local' value={file.end} filename={file.name} onChange={(e)=>{
+                                <input type='datetime-local' value={file.end} uuid={file.uuid} onChange={(e)=>{
                                     const next = obj.map(img => {
-                                        if(e.target.getAttribute('filename')===img.name){
+                                        if(e.target.getAttribute('uuid')===img.uuid){
                                             return {...img, end: e.target.value};
                                         }   
                                         return img;
@@ -74,9 +74,9 @@ export default function ImgChoices(props) {
                             </div>
                             <div>
                                 <label>order:</label>
-                                <input type='number' value={file.order} filename={file.name} onChange={(e)=>{
+                                <input type='number' value={file.order} uuid={file.uuid} onChange={(e)=>{
                                     const next = obj.map(img => {
-                                        if(e.target.getAttribute('filename')===img.name){
+                                        if(e.target.getAttribute('uuid')===img.uuid){
                                             return {...img, order: e.target.value};
                                         }   
                                         return img;

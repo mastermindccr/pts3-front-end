@@ -17,7 +17,8 @@ router.post('/', (req, res) => {
     const file = require('../public/json/showPic.json');
     try{
         for(let i in req.body){
-            file[req.body[i].name] = {
+            file[req.body[i].uuid] = {
+                name: req.body[i].name,
                 start: jsonWithTimezone(req.body[i].start),
                 end: jsonWithTimezone(req.body[i].end),
                 order: req.body[i].order,

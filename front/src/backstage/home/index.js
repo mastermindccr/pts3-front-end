@@ -26,7 +26,8 @@ export default function Home() {
 
     return <div>
         <SubmitImg 
-            imgFile={imgFile} 
+            imgFile={imgFile}
+            imgRender={imgRender}
             setImgFile={setImgFile} 
             setImgRender={setImgRender}
             setFetchedState={setFetchedState}

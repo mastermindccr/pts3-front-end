@@ -8,7 +8,7 @@ export default function SubmitImg(props) {
             alert('please select a file!');
             return;
         }
-        if(await handleRepeated()) return;
+        if(handleRepeated()) return;
         const formData = new FormData();
         formData.append('img', props.imgFile);
         formData.append('filename', props.imgFile.name);
@@ -27,20 +27,12 @@ export default function SubmitImg(props) {
         props.setImgDelete(del);
     }
 
-    async function handleRepeated() {
-        const response = await (await fetch(`${process.env.REACT_APP_backend_server}/checkImgExists`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                "Accept": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({
-                "name": props.imgFile.name
-            })
-        })).json()
-        if(response === 'repeated'){
-            alert('please upload another one!');
-            return true;
+    function handleRepeated() {
+        for(let i in props.imgRender){
+            if(props.imgRender[i].name===props.imgFile.name){
+                alert('please upload another one!');
+                return true;
+            }
         }
         alert('upload completed!');
         return false;

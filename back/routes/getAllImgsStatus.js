@@ -22,7 +22,8 @@ router.get('/', (req, res) => {
     var ret = [];
     for(let i in file){
         ret.push({
-            name: i,
+            uuid: i,
+            name: file[i].name,
             start: jsonWithTimezone(file[i].start), 
             end: jsonWithTimezone(file[i].end),
             order: file[i].order,
