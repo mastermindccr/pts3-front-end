@@ -11,9 +11,11 @@ There is a default img when there's no banner playing.
             0.neither rendered or deleted
             1.rendered
     -fanPages: record urls of the current fan pages rendering on the front stage
+    
 <div style="border: 1px solid black">
     <strong>url paths are designed in RESTful pattern</strong>
 </div>
+
 # routers
 distinguish routes for admin and public
 # routes
