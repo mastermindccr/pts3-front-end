@@ -1,12 +1,14 @@
+.block {
+    border: 2px solid black;
+}
+
 .renderAndDelete {
     display:flex;
-    margin: 0 15%;
+    margin: 0 5%;
 }
 
 .chooseImg {
     margin: 0 auto;
-    padding-left: 50px;
-    padding-right: 50px;
     font-size: 25px;
 }
 
@@ -19,6 +21,12 @@
     display: block;
 }
 
+.tag {
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+}
+
 input[type=checkbox] {
     margin-right: 10px;
     width: 20px;
@@ -27,4 +35,9 @@ input[type=checkbox] {
 
 input[type=submit] {
     font-size: 20px;
+}
+
+input[type=datetime-local], input[type=number] {
+    font-size: 20px;
+    width: 250px;
 }

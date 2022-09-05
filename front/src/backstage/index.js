@@ -4,16 +4,20 @@ import ImgChoices from './components/imgChoices';
 import FanPages from './components/fanPages';
 
 export default function Home() {
-    const [imgFile, setImgFile] = useState(null);
-    const [imgStatus, setImgStatus] = useState([]);
-    const [fanPages, setFanPages] = useState([]);
+    const [imgFile, setImgFile] = useState(null); // file selected 
+    const [imgStatus, setImgStatus] = useState([]); // status about all submitted images
+    const [fanPages, setFanPages] = useState([]); // URLs of the three fan pages
 
+    // fetch initial infos from the back end server
     useEffect(() => {
         (async () => {
-            const imgResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/admin/imgs`)).json();
-            const fanPagesResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/fanPages`)).json();
-            setFanPages(fanPagesResponse);
+            let imgResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/admin/imgs`)).json();
+            imgResponse = imgResponse.map((file, index)=>{return {...file, color: index}});
             setImgStatus(imgResponse);
+
+            let fanPagesResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/public/fanPages`)).json();
+            setFanPages(fanPagesResponse);
+            
         })();
     }, [])
 

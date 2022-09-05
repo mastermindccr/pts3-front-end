@@ -26,6 +26,7 @@ router.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     const file = require('../../public/json/imgs.json');
     var ret = [];
+    const d = new Date().toJSON();
     for(let i in file){
         ret.push({
             uuid: i,
@@ -33,7 +34,7 @@ router.get('/', (req, res) => {
             start: jsonWithTimezone(file[i].start), 
             end: jsonWithTimezone(file[i].end),
             order: file[i].order,
-            show: file[i].show
+            show: (file[i].start<d && d<file[i].end)?file[i].show:0
         });
     }
     ret.sort((a, b) => a.order<b.order?-1:1)
@@ -51,6 +52,7 @@ router.post('/', (req, res) => {
     }
 
     const file = require('../../public/json/imgs.json');
+    let sequence = 1;
     for(let i in req.body){
         if(req.body[i].show==2){
             fs.unlink(path.join(__dirname, `../../public/img/${req.body[i].uuid}`), (err)=>{
@@ -63,9 +65,10 @@ router.post('/', (req, res) => {
                 name: req.body[i].name,
                 start: jsonWithTimezone(req.body[i].start),
                 end: jsonWithTimezone(req.body[i].end),
-                order: req.body[i].order,
+                order: sequence,
                 show: req.body[i].show
             };
+            sequence++;
         }
         
     }

@@ -11,16 +11,25 @@ export default function FanPages(props) {
                 "Accept": "application/json; charset=utf-8"
             },
             body: JSON.stringify(props.fanPages)
-        })).json();
-        if(response){
-            alert('FanPages sended!')
+        }));
+        try{
+            if(response.json()){
+                alert('送出成功!');
+            }
+            else{
+                alert('送出失敗，請刷新頁面後再重試一次!');
+            }
         }
+        catch(e){
+            alert('伺服器錯誤!');
+        }
+
     }
 
     return <div className='fanPages'>
         {props.fanPages.map((file, index) => {
             return <div key={`fanPage${index}`} className='fanPage'>
-                <label>link{index+1}:</label>
+                <label>連結{index+1}：</label>
                 <input value={file} style={{width: '100%', fontSize: '20px'}} onChange={e=>{
                     let tmp = props.fanPages.slice();
                     tmp[index] = e.target.value;
@@ -28,6 +37,6 @@ export default function FanPages(props) {
                 }}/>
             </div>
         })}
-        <input type='submit' value='send' onClick={()=>{handleSubmitFanPages()}}/>
+        <input type='submit' value='送出' onClick={()=>{handleSubmitFanPages()}}/>
     </div>
 }
