@@ -54,9 +54,9 @@ export default function ImgChoices(props) {
                 let disabled = action==='render'?(file.show===2?true:false):(file.show===1?true:false);
                 let checked = action==='render'?(file.show===1?true:false):(file.show===2?true:false);
                 return(
-                    <div className="file" key={file.uuid} style={{
+                    <div key={file.uuid} style={{
                         backgroundColor: `rgb(${(file.color*83)%255},${(120+(file.color*59))%255},${255-(file.color*47)%255}, 0.4)`,
-                        minHeight: '140px'}}>
+                        minHeight: '200px'}}>
                         <input type='checkbox' uuid={file.uuid} checked={checked} disabled={disabled} onChange={(e)=>{
                             const next = props.imgStatus.map(img => {
                                 if(e.target.getAttribute('uuid')===img.uuid){

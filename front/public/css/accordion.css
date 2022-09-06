@@ -1,0 +1,88 @@
+.accordion {
+	display: inline-block;
+	text-align: center;
+	margin: 1%;
+	width: 100%;
+
+}
+
+.accordion:hover .accordion-content {
+
+  /*max-height: 2000px;*/
+  max-height:100%;
+
+}
+
+.accordion-content {
+
+  -webkit-transition: max-height 0.1s;
+
+  -moz-transition: max-height 0.1s;
+
+  -ms-transition: max-height 0.1s;
+
+  -o-transition: max-height 0.1s;
+
+  transition: max-height 0.1s;
+
+  background: /*#e5feff*/transparent;
+
+  overflow: hidden;
+
+  max-height: 0;
+
+
+
+}
+
+.accordion-inner {
+	color: #000;
+	font-size: 15px;
+	padding-top: 40px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+
+}
+
+.buttona {
+      align-self:center;
+      background:transparent;
+      padding:1rem 1rem;
+      margin:0 1rem;
+      font-family: 微軟正黑體;
+      transition:all .5s ease;
+      color:#41403E;
+      font-size:2rem;
+      font-weight:600;
+      letter-spacing:1px;
+      outline:none;
+      box-shadow: 2px 2px 2px 2px hsla(0,0%,0%,.2);
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.buttona:hover{
+      box-shadow: 2px 2px 2px 2px hsla(0,0%,0%,.2);
+      transform:scale(1.1,1.1);
+} 
+
+.buttonb {
+    align-self: center;
+    background: transparent;
+    padding: 3rem 2rem;
+    margin: 0 1rem;
+    font-family: 微軟正黑體;
+    transition: all .5s ease;
+    color: #41403E;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    outline: none;
+    box-shadow: 2px 2px 2px 2px hsla(0,0%,0%,.2);
+    border-radius: 42px / 50px;
+}
+
+.buttonb:hover{
+      box-shadow: 2px 2px 2px 2px hsla(0,0%,0%,.2);
+      transform:scale(1.1,1.1);
+} 

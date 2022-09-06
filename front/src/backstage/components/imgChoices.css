@@ -12,10 +12,6 @@
     font-size: 25px;
 }
 
-.file {
-    padding-bottom: 20px;
-}
-
 .block > input[type=submit] {
     margin: 0 auto;
     display: block;

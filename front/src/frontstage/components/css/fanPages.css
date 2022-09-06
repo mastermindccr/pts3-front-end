@@ -1,0 +1,7 @@
+.tittle {
+    font-size: 30px;
+    color: hsla(347,81%,49%,1.00);
+    border-top: thin solid hsla(347,81%,49%,1.00);
+    margin-bottom: 12px;
+    display: block;
+}

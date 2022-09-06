@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import SubmitImg from './components/submitImg';
-import ImgChoices from './components/imgChoices';
-import FanPages from './components/fanPages';
+import SubmitImg from './components/submitImg.js';
+import ImgChoices from './components/imgChoices.js';
+import FanPages from './components/fanPages.js';
 
 export default function Home() {
     const [imgFile, setImgFile] = useState(null); // file selected 
@@ -10,6 +10,7 @@ export default function Home() {
 
     // fetch initial infos from the back end server
     useEffect(() => {
+        document.title = '公視三台後台';
         (async () => {
             let imgResponse = await (await fetch(`${process.env.REACT_APP_backend_server}/admin/imgs`)).json();
             imgResponse = imgResponse.map((file, index)=>{return {...file, color: index}});
