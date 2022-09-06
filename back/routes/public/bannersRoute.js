@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
             }
         }
     }
-    if(!ret.length) ret.push('default.png');
+    if(!ret.length) ret.push('default.jpg');
     res.json(ret);
 })
 

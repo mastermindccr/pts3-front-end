@@ -8,7 +8,7 @@ router.get('/:name', (req, res) => {
     const link = fromString(req.params.name);
     res.sendFile(path.join(__dirname, `../../public/img/${link}`), err => {
         if(err) {
-            res.redirect(404, `http://localhost:${process.env.PORT}/img/default.png`)
+            res.redirect(404, `http://localhost:${process.env.PORT}/img/default.jpg`)
         }
     })
 })

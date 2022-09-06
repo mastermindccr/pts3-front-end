@@ -32,4 +32,4 @@ distinguish routes for admin and public.
     -banners
         *GET /public/banners    : get name of all imgs shown on the banner
     -imgs
-        *GET /public/imgs/{name}: get image from source, return default.png if not found
+        *GET /public/imgs/{name}: get image from source, return default img if not found
