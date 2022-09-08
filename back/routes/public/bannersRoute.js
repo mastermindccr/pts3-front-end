@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     var tmp = [];
     for(let i in file){
         tmp.push({
-            name: i,
+            name: file[i].name,
             start: file[i].start, 
             end: file[i].end,
             order: file[i].order,

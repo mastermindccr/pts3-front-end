@@ -9,7 +9,7 @@ export default function Carousel(props) {
         if(props.banners.length)
             return <AutoPlaySwipeableViews enableMouseEvents axis='x-reverse'>
                 {props.banners.map((img, index) => {
-                    return <img src={`${process.env.REACT_APP_backend_server}/img/${img}`} alt="" key={index} style={{width:'100%'}}/>
+                    return <img src={`${process.env.REACT_APP_backend_server}/public/imgs/${img}`} alt="" key={index} style={{width:'100%'}}/>
                 })}
             </AutoPlaySwipeableViews>
     }
