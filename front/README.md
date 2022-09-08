@@ -20,6 +20,12 @@
     -insert Javascript SDK to load in Facebook plugin
     -use swipeable view to create banner
 
+# Issues
+### Facebook fan pages on front stage may cause some problems, possible causing reasons:
+    -browser caches old version even if sdk version updates
+    -other plugins(AD Blocks etc.)stop facebook sdk from loading
+    -safari may have privacy policy to hinder facebook sdk from loading
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -33,3 +33,8 @@ distinguish routes for admin and public.
         *GET /public/banners    : get name of all imgs shown on the banner
     -imgs
         *GET /public/imgs/{name}: get image from source, return default img if not found
+
+# Notice
+### If a user asks for inexistent api endpoint, the server will respond with 404 except for /public/imgs/{name}, which will redirect to default.jpg.
+
+### If desire to change default image, please replace "default.jpg" under the path /public/img with another image with same name.
